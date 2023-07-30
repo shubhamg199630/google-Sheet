@@ -1,0 +1,38 @@
+// Logic
+// Very simple , use unordered map to store unquie email addess,
+// make sure that for after + igonre the local name of the string and ignore the . in the local address.
+// solutions
+class Solution {
+public:
+    int numUniqueEmails(vector<string>& emails) {
+        int n = emails.size();
+        unordered_map<string, bool> hash; 
+        for ( int i = 0 ; i < n ; i++)
+        {
+            string s;
+            string a = emails[i];
+            int flag = 0;
+            for ( int j = 0; j <a.size() ; j++)
+            {
+                if (a[j] == '+')
+                    flag = 1;
+                else if (a[j] == '@')
+                {    
+                    //cout<<a.substr(j+1, a.size() - j -1)<<" ";
+                    s = s + a.substr(j, a.size() - j );
+                    j = a.size();
+                }
+                else if (flag == 1)
+                    continue;
+                else if (a[j] == '.')
+                    continue;
+                else
+                    s = s+ a[j];
+            }
+            //cout<<s<<" ";
+            hash[s] = true;
+        }
+        return hash.size();
+    }
+};
+
